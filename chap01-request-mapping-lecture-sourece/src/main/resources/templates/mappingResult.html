@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ResponsePage</title>
+</head>
+<body> <!-- String 타입의 문자열(mappingResult)과 같은 파일명 생성
+            → 사용자에게 보여질 화면단 -->
+
+    <!-- JSP와 다르게 Tymeleaf 로 송출하기 -->
+    <!--  th : 타임리프 문법임을 나타냄
+        text : 문자열 형식의 값-->
+    <h3 th:text="${message}"></h3>
+</body>
+</html>

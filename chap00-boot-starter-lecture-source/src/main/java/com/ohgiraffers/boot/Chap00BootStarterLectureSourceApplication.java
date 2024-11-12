@@ -12,6 +12,7 @@ public class Chap00BootStarterLectureSourceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Chap00BootStarterLectureSourceApplication.class, args); // 스캔한 정보를 전달
 		// 컨테이너 생성 구문
+
 	}
 
 }
