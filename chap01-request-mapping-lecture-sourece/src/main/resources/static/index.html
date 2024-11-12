@@ -14,5 +14,55 @@
     <h3>GET 방식의 요청 : /menu/regist</h3>
     <button onclick="location.href='/menu/regist'">GET 메뉴 등록 요청</button>
         <!-- 위 코드를 컨드롤할 클래스 생성 : MethodMappingController-->
+
+    <hr> <!-- 3교시, Post 방식으로 동작해보기 -->
+    <h3>POST : /menu/regist</h3>
+    <form action="/menu/regist" method="post">
+        <button type="submit">POST 메뉴 등록 요청</button>
+    </form> <!-- GET이든 POST든 모두 동작하는 걸 확인 -->
+
+    <hr><!-- 이번에는 확실히 GET 방식으로 동작하게 작성 -->
+    <h3>GET : /menu/modify</h3>
+    <button onclick="location.href='/menu/modify'">
+        GET 메뉴 수정 요청
+    </button> <!-- 이걸 수행할 메서드 작성 → modifyMenu 메서드 -->
+
+    <!-- 위와 같은 URL로 POST 방식 테스트해보기-->
+    <h3>POST : /menu/modify</h3>
+    <form action="/menu/modify" method="post">
+        <button type="submit">POST 메뉴 수정 요청</button>
+    </form> <!-- Controller에 GET 방식만 받겠다고 지정해 뒀기 때문에 에러 발생 -->
+
+    <hr> <!-- GET , POST URL 동일하게 만들고, 삭제해보기 -->
+    <h3>GET : /menu/delete</h3>
+    <button onclick="location.href='/menu/delete'">GET 메뉴 삭제 요청</button>
+    <h3>POST : /menu/delete</h3>
+    <form action="/menu/delete" method="post">
+        <button type="submit">POST 메뉴 삭제 요청</button>
+    </form>  <!-- Controller에 수행할 메서드 작성 : -->
+
+
+
+    <hr>
+    <h2>2. 클래스의 요청 매핑하기</h2>
+    <h3>GET : /order/regist</h3>
+    <button onclick="location.href='/order/regist'">GET 주문 등록하기</button>
+    <h3>POST : /order/regist</h3>
+    <form action="/order/modify" method="post">
+        <button type="submit">POST 주문 수정하기</button>
+    </form>
+
+    <h3>POST : /order/delete</h3>
+    <form action="/order/delete" method="post">
+        <button type="submit">POST 주문 삭제하기</button>
+    </form>
+
+    <h3>GET : /order/detail/{orderNo}</h3>
+    <button onclick="location.href='/order/detail/3'">GET 주문 상세보기</button>
+
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>
