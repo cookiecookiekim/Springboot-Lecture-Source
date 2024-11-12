@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MethodMappingController {
 
     /* 1. 메서드 방식 미지정 */
-    // 사용자의 요청을 매칭시킬 메서드
-    // 버튼을 누른다 → request
+    // 사용자의 요청을 매칭시킬 메서드 : 버튼을 누른다 → request
     @RequestMapping ("/menu/regist") // button의 onclick 속성
     /* RequestMapping는 URL만 일치하면 모든 방식의 요청을 처리하는,
        Servlet으로 치면 service 메서드 */
