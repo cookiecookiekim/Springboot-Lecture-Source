@@ -1,8 +1,10 @@
 package com.ohgiraffers.handlermethod;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Map;
 // 24-11-13 (수) 1교시 요청을 처리할 컨트롤러 클래스
 @Controller
 @RequestMapping("/request/*") // /request 이하 모든 요청 매핑
+@SessionAttributes("id") // key: "id" 설정 (sessionTest2 메서드 처리용)
 public class RequestController {
 
     /* title. 요청 시 값을 전달받는 방법 */
@@ -107,20 +110,20 @@ public class RequestController {
     }
 
     /* comment. ★ 요청 파라미터가 몇 개 안 되면 @RequestParam
-    *        어노테이션을 사용해도 간단하게 작성이 가능하다.
-    *   하지만 받아올 데이터가 많아진다면 관리할 변수나,
-    *   키 값이 많아질 수 밖에 없다.
-    *   -------------------------------------
-    *   @ModelAttribute 객체를 생성하여 요청되는 값을
-    *   필드와 form 태그의 name 속성과 비교하여 값을 넣어준다.
-    *   ---------------------
-    *   @ModelAttribute 담은 값은 view 페이지에서 타입(자료형)
-    *   앞글자를 소문자로 한 네이밍 규칙으로 사용 가능하다 (menuDTO)
-    *   -------------
-    *   다른 이름을 사용하고 싶다면 @ModelAttribute("사용할값")
-    *   이렇게 지정도 가능하다. */
+     *        어노테이션을 사용해도 간단하게 작성이 가능하다.
+     *   하지만 받아올 데이터가 많아진다면 관리할 변수나,
+     *   키 값이 많아질 수 밖에 없다.
+     *   -------------------------------------
+     *   @ModelAttribute 객체를 생성하여 요청되는 값을
+     *   필드와 form 태그의 name 속성과 비교하여 값을 넣어준다.
+     *   ---------------------
+     *   @ModelAttribute 담은 값은 view 페이지에서 타입(자료형)
+     *   앞글자를 소문자로 한 네이밍 규칙으로 사용 가능하다 (menuDTO)
+     *   -------------
+     *   다른 이름을 사용하고 싶다면 @ModelAttribute("사용할값")
+     *   이렇게 지정도 가능하다. */
     @PostMapping("search") // search.html에서 넘어온 결과 처리 메서드
-    public String searchMenu(@ModelAttribute MenuDTO menu){ // 여기서 MenuDTO 생성
+    public String searchMenu(@ModelAttribute MenuDTO menu) { // 여기서 MenuDTO 생성
 
         System.out.println("menu = " + menu); // 담긴 거 확인 용으로 출력
 //menu = MenuDTO{name='1231234', price=7, categoryCode=1, orderableStatus='Y'}
@@ -133,5 +136,51 @@ public class RequestController {
         // key : menuDTO
 
         return "request/searchResult";
+    }
+
+    @GetMapping("login")
+    public void login() {
+    } // login.html 파일 생성
+
+    /* comment. HttpSession 객체 이용해서 요청 값 저장하기 */
+    @PostMapping("login1")
+    public String loginTest(HttpSession session,
+                            @RequestParam String id) { // form 태그의 id 꺼내오기
+
+        session.setAttribute("id", id); // 키와 밸류 설정
+        // model에 add 할 필요 없는 이유 : session을 사용한다는 건
+        // 한 브라우저 내에서 항상 사용 가능 (세션이 만료될 때 까지)
+        return "request/loginResult";
+    }
+
+    @GetMapping("logout1") // loginResult에서의 로그아웃 처리 메서드 생성
+    public String logout1(HttpSession session) {
+        // 세션 만료 위해 매개변수로 session 받기
+        session.invalidate(); // session을 강제로 만료 시키는 메서드
+        return "request/loginResult";
+    }
+
+    /* comment. @SessionAttributes를 이용한 session에 값 담기
+     *   클래스 레벨에 @SessionAttributes를 사용하여
+     *   Session에 담을 key 값을 설정해두면 Model 영역에
+     *   해당 key로 값이 추가되는 경우 자동으로 session에 등록해준다. */
+    @PostMapping("login2")
+    public String sessionTest2(Model model,
+                               @RequestParam String id) {
+        model.addAttribute("id", id);
+        // key가 상위 @SessionAttributes("id") id와 일치해야함
+        return "request/loginResult";
+        // session 객체가 아니므로 session.invalidate(); 동작하지 않음
+        // 로그아웃 눌러도 반응 없음.
+    }
+
+    /* comment.
+    *   SessionAttributes 방식은 session의 상태를 관리하는
+    *   SessionStatus 객체의 setComplete() 메서드를 사용해야 만료 가능 */
+    // session이 아닌 model에 담긴 id 정보 삭제위한 로그아웃 메서드
+    @GetMapping("logout2")// 많이 사용하지 않음, 이런 게 있구나하고 넘어가기
+    public String logout2 (SessionStatus sessionStatus) {
+        sessionStatus.setComplete();
+        return "request/loginResult"; // 로그아웃2 → 로그아웃 가능!
     }
 }
