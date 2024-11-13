@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body> <!-- 버튼 클릭 시 보여지는 view 파일 -->
+    <h1>WebRequest 객체로 파라미터 전달 받기</h1>
+    <h3>신규 메뉴 등록 폼</h3>
+    <form action="regist" method="post">
+        <label>등록할 메뉴 이름 : </label>
+        <input type="text" name="name">
+        <label>등록할 메뉴 가격 : </label>
+        <input type="number" name="price" step="1000" min="0"><br>
+        <label>등록할 메뉴 카테고리 : </label>
+        <select name="categoryCode">
+            <option value="1">식사</option>
+            <option value="2">음료</option>
+            <option value="3">디저트</option>
+        </select><br>
+        <button type="submit">등록하기</button>
+    </form>
+</body>
+</html>
