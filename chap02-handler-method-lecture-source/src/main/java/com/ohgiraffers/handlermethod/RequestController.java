@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Map;
 
 // 24-11-13 (수) 1교시 요청을 처리할 컨트롤러 클래스
@@ -182,5 +184,35 @@ public class RequestController {
     public String logout2 (SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return "request/loginResult"; // 로그아웃2 → 로그아웃 가능!
+    }
+
+    @GetMapping("body")
+    public void body(){}
+
+    /* comment. @RequestBody
+    *   해당 어노테이션은 http 본문 자체를 읽는 부분을 모델로 변환
+    *   출력해보니 쿼리스트링 형태로 문자열 전달된다.
+    *   → key 와 value 형태로 값이 전달되고 있다.
+    *   추후에 나올 개념인 JSON(자바스크립트객체표현식)으로 전달되면
+    *   Jackson 컨버터 → 자바스크립트 객체 ↔ 자바 객체
+    *   자동 변환해주어 프론트엔드 서버(js 기반) 백엔드 서버(java기반)
+    *   간의 데이터 전송을 가능케 해준다.
+    *   ----------------------
+    *   주로 Rest API를 사용하여 만들 때 많이 사용하며
+    *   일반적인 form 테그에서 거의 사용하지 않는다. */
+    @PostMapping("body")
+    public void bodyTest(@RequestBody String body) throws UnsupportedEncodingException {
+        System.out.println("body = " + body);
+//body = name=%EC%BD%9C%EB%94%B1%EC%A7%80&price=3311&categoryCode=1&orderableStatus=Y
+        // post이므로 데이터가 숨겨져 있으나, RequestBody 사용 시, 가려진 채로 url 출력
+        /* comment.
+        *   'encoding 되어 있다.(암호화 처리)' 되어 있다고 말하고,
+        *   해석하기 위해 URLDecoder로 decoding 해야 한다. */
+
+        // 예외처리 강제화, UTF-8 : 한글 안 깨지게
+        System.out.println(URLDecoder.decode(body, "UTF-8"));
+        // name=쿠딱지&price=33231&categoryCode=1&orderableStatus=Y
+
+
     }
 }
