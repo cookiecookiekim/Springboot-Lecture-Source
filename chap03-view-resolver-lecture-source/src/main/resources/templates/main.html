@@ -13,11 +13,39 @@
     <hr>
     <h3>문자열로 뷰 이름 반환하기</h3>
     <button onclick="location.href='string'">문자열로 view 반환</button> <!-- forward 방식 -->
-    <!-- run 하고 localhost 들어가보면 에러 페이지 등장
+    <!-- (string 요청 처리 전) run 하고 localhost 들어가보면 에러 페이지 등장
         → default 요청이 갔는데, default가 아무 것도 없기 때문 (/ ~~) -->
     <hr>
 
     <h3>문자열로 redirect 하기</h3>
     <button onclick="location.href='string-redirect'">문자열로 redirect</button>
+    <hr>
+
+    <h3>문자열로 view이름 반환하면서 리다이렉트 시 값 유지하기</h3>
+    <button onclick="location.href='string-redirect-attr'">리다이렉트 시 값 유지</button>
+    <script>
+        const flashMessage = `[[${flashMessage}]]`; // addFlashAttribute의 key 값 담기
+        console.log(flashMessage);
+
+        if (flashMessage){
+            alert(flashMessage);
+        } // 클릭 시 얼러트 창으로 value 송출
+    </script>
+    <hr>
+
+    <h3>ModelAndView로 view이름 지정해서 반환하기</h3>
+    <button onclick="location.href='modelandview'">ModelAndView 객체 사용해서 반환</button>
+    <hr>
+
+    <h3>ModelAndView로 리다이렉트 && 값 전달</h3>
+    <button onclick="location.href='modelandview-redirect-attr'">ModelAndView로 redirect && attr</button>    <script>
+        const flashMessage2 = `[[${flashMessage2}]]`; // addFlashAttribute의 key 값 담기
+        console.log(flashMessage2);
+
+        if (flashMessage2){
+            alert(flashMessage2);
+        } // 클릭 시 얼러트 창으로 value 송출
+    </script>
+
 </body>
 </html>
