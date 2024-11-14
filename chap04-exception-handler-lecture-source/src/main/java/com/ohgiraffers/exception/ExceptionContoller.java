@@ -26,13 +26,16 @@ public class ExceptionContoller {
     public String nullHandler(NullPointerException exception){
         System.out.println("controller 레벨에서 NullPointer 예외 처리");
         return "error/nullPointer";
+        // 전역 레벨에 정의한 메서드가 호출되지 않고, 현재 메서드 호출
+        // 이유 : 가까운 곳(클래스 내)부터 훑기 때문. 만약 클래스 외부에 정의했을때엔
+            // 전역인 메서드 호출
     }
 
     @GetMapping("userexception")  // 시그니처에 throws MemberNotFoundException 추가
     public String userException() throws MemberNotFoundException {
         boolean check = true;
         if (check) {
-            throw new MemberNotFoundException("NotFoundExceptio 에러 예외 처리!");
+            throw new MemberNotFoundException("NotFoundException 에러 예외 처리!");
         } // MemberNotFoundException 클래스 생성.
         return "/";
     }
@@ -42,4 +45,5 @@ public class ExceptionContoller {
         model.addAttribute("exception", exception);
         return "error/memberNotFound"; // error 하위에 memberNotFound 생성
     }
+
 }

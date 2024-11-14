@@ -12,6 +12,16 @@
     <hr>
     <h3>@ExceptionHandler 어노테이션 사용</h3>
     <button onclick="location.href='nullpointer'">NullPointer 발생 시 예외처리</button>
+    <br>
     <button onclick="location.href='userexception'">사용자 정의의 Exception 클래스 사용하기</button>
+    <hr>
+
+    <h3>@ControllerAdvice 어노테이션을 이용한 전역 예외 처리</h3>
+    <button onclick="location.href='global-nullpointer'">전역 Null Pointer 예외처리</button>
+    <button onclick="location.href='global-userexception'">전역 사용자 정의 예외처리</button>
+
+                        <!-- 무수한 에러(예외처리)가 존재하니 디폴트로 설정 해놓기 -->
+    <button onclick="location.href='global-default'">Default 예외처리</button>
+
 </body>
 </html>
