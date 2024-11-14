@@ -16,6 +16,8 @@ public class ExceptionContoller {
         System.out.println(str.charAt(0));
         return "/"; // 리턴 구문으로 메인페이지 보여주기
         // 버튼 클릭 시 nullPointerException 발생 , 에러 페이지 핸들링 해보기
+        /* @ExceptionHandler(NullPointerException.class) 작성 이후,
+          return구문 가기도 전에 @ExceptionHandler가 낚아 챔 */
     }
 
     /* comment. @ExceptionHandler 어노테이션
