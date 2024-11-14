@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head> <!-- 24-11-14 (목) 1교시 -->
+        <!-- 현 프로젝트 최초 생성 (static이 아니라 templates부터 시작) -->
+<body>
+    <h1>view resolver를 이용한 view 페이지 렌더링</h1>
+    <hr>
+    <h3>문자열로 뷰 이름 반환하기</h3>
+    <button onclick="location.href='string'">문자열로 view 반환</button> <!-- forward 방식 -->
+    <!-- run 하고 localhost 들어가보면 에러 페이지 등장
+        → default 요청이 갔는데, default가 아무 것도 없기 때문 (/ ~~) -->
+    <hr>
+
+    <h3>문자열로 redirect 하기</h3>
+    <button onclick="location.href='string-redirect'">문자열로 redirect</button>
+</body>
+</html>
