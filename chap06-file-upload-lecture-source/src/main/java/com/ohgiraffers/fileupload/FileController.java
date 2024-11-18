@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -67,7 +69,63 @@ public class FileController {
         // 파일에 고유한 이름 부여 (고유 번호를 부여해주는 UUID 클래스)
         String savedName = UUID.randomUUID().toString().replace("-", "")
                         + ext;
+        System.out.println("savedName = " + savedName);
         // 랜덤 ID 생성, String으로 변경
+
+        /* index. 3. 고유한 파일 식별번호 및 파일 저장경로 생성 완료.
+        *            이제 파일을 저장 경로에 저장. */
+        // 전달 받은 파일 객체를 변환
+        singleFile.transferTo(new File(filePath + "/" + savedName));
+
+        model.addAttribute("message", "파일 업로드 생성");
+        model.addAttribute("img", "static/img/single/" + savedName);
+
+        return "result";
+    }
+
+    @PostMapping("multi-file") // 여러 파일을 가져오기 때문에 List<>로 설정
+    public String multiFile (@RequestParam List<MultipartFile> multifile
+                            ,String description
+                            ,Model model) throws IOException {
+
+        /* index. 1. 파일을 저장할 위치 설정 */
+        Resource resource =
+                resourceLoader.getResource("classpath:static/img/multi");
+
+        String filePath = null;
+        // 위에서 지정한 파일 저장 위치에 파일이 존재하지 않는다면 생성하겠다~
+        if (!resource.exists()) {
+            String root = "src/main/resources/static/img/multi";
+            File file = new File(root);
+
+            file.mkdirs();
+            // mkdirs : make directory의 약자
+            // root에 지정한 경로대로 디렉토리를 만들어 준다.
+
+            // 만든 폴더의 경로를 filePath 변수에 담아주기
+            filePath = file.getAbsolutePath();
+        } else { // 디렉토리가 만들어진 적이 있다면~
+            filePath = resourceLoader.getResource("classpath:static/img/multi")
+                    .getFile().getAbsolutePath();
+        }
+
+        /* index. 2. 멀티 파일 변경 처리 */
+        List<FileDTO> files = new ArrayList<>();
+        List<String> savedFiles = new ArrayList<>();
+
+        for (MultipartFile file : multifile){
+            String originFileName = file.getOriginalFilename();
+            String ext = originFileName.substring(originFileName.lastIndexOf("."));
+            String savedName = UUID.randomUUID().toString().replace("-", "")
+                    + ext;
+
+            files.add(new FileDTO(originFileName, savedName, filePath, description)); // 추가
+            file.transferTo(new File(filePath + "/" + savedName)); // 변환
+            savedFiles.add("static/img/multi/" + savedName); // 주소 작성
+        }
+
+        model.addAttribute("message", "파일 업로드 성공!");
+        model.addAttribute("imgs", savedFiles);
 
         return "result";
     }

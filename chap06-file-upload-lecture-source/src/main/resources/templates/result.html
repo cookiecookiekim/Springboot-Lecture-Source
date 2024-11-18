@@ -8,6 +8,15 @@
     <title>Document</title>
 </head>
 <body>
+    <h1 th:text="${message}"></h1>
+    <div th:if="${img != null}"> <!-- 이미지가 1개 존재한다면 보여주겠다. -->
+        <img th:src="${img}" width="300" height="300">
+    </div>
 
+    <div th:else>  <!-- 이미지가 2개 이상 존재한다면 보여주겠다. -->
+        <div th:each="img : ${imgs}">
+            <img th:src="${img}" width="300" height="300">
+        </div>
+    </div>
 </body>
 </html>
