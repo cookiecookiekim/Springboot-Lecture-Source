@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+    <h1>표현식</h1>
+    <pre>
+        <!--
+        < 표현식의 종류 >
+        1. 변수 표현식 ${}
+        2. 선택 변수 표현식 *{}
+        3. 메시지 표현식 #{}
+        4. 링크 표현식 @{}
+        5. 조각 표현식 ~{}
+        6. 인라인 표현식 [[...]], [(...)]
+       인라인 표현식은 특이한 표현식이라, 주석처리 하지 않고 run 돌리면 에러 날 수도 있음. -->
+    </pre>
+    <h3>표현식 - 변수 표현식 ${...}</h3>
+    <!-- url에 쿼리스트링 파라미터로 넘겨받는 값은 param이라는 용어에 저장되어 있음.
+         추가적으로 session에 setAttribute로 담아 둔 값은 session이라는 용어에 저장 돼있음. -->
+    <p th:text="${param.title}"></p> <!-- param이 가지고 있는, key 값인 title -->
+    <p th:text="${param.no[0]}"></p> <!-- 중복된 key 값인 no은 index 숫자 체계로 0과 1번에 저장되어 있음 -->
+    <p th:text="${param.no[1]}"></p>
+
+    <h3>표현식 - 메세지 표현식 #{...}</h3> <!-- resources 하위에 messages.properties 파일 생성-->
+                                       <!-- 메시지 표현식은 반드시 messages.properties로 생성해야 함! -->
+    <!-- resources 하위에 message.properties 파일을 읽어 들일 수 있다.
+        주의점은 위치와 이름이 다르면 인식할 수 없다.-->
+    <p th:text="#{value}"></p>
+
+    <h3>표현식 - 링크 표현식 @{...}</h3> <!-- static → css 디렉토리 → common.css 구성 -->
+    <a th:href="@{/}">메인으로</a> <!-- header에 파일 지정-->
+
+    <!-- 중요! -->
+    <h3>표현식 - 선택 변수 표현식 *{}</h3> <!-- MemberDTO 생성 -->
+    <p th:text="${member}"></p> <!-- MemberDTO(name=김규남, age=20, gender=남, address=서울시) -->
+    <p th:text="${member.name}"></p> <!-- 김규남 -->
+    <!-- object를 선언하면 *{} 표현식으로 객체 내부 필드에 직접 접근 가능 -->
+    <p th:object="${member}" th:text="*{age}"></p> <!-- 20 -->
+
+    <!-- object 이용한 다른 방법 --> <!-- 이 방법의 단점 : 항상 부모 공간을 만들어야 함.-->
+    <div th:object="${member}"> <!-- 부모 태그에다가 object를 최초 선언해두면 자식에는 언제든 참조 가능 -->
+        <p th:text="*{address}"></p>
+        <p th:text="*{name}"></p>
+        <p th:text="*{gender}"></p>
+    </div>
+        <!-- comment. 부모 html 태그를 사용하게 되면 어쩔 수 없이 화면 상에서 영역 차지하게 됨.
+                 단순 값을 공유하기 위한 공간임에도 화면상에서 공간을 차지하기에
+                 UI를 꾸미는 데 방해가 될 수 있음. -->
+
+    <h3>th:block</h3>
+    <!-- 차선 방법 (block : html이 아니라 가상의 공간이므로 부담 없음)
+        → 공간 할당이 없으니, 단순히 공유할 값을 사용할 공간이라고 생각-->
+    <th:block th:object="${member}">
+        <p th:text="age"></p>
+    </th:block>
+    <hr>
+
+    <h3>HTML 출력 th:text, th:utext, th:value</h3>
+    <pre>
+        서버에서 넘기는 값을 html 태그에 표현할 때 th:text , th:utext 사용 가능.
+        th:text는 html 태그를 단순 문자열로 처리하지만,
+        th:utext는 html 태그를 태그 자체로 인식 해준다.
+        th:value는 태그의 value 값을 지정할 수 있다.
+    </pre>
+    <ul>
+        <li th:text="${hello}"></li>
+        <!-- DB에 태그가 포함된 문자열을 저장할 때 자주 사용 (회원 정보 수정) -->
+        <li th:utext="${hello}"></li> <!-- 태그 자체로(h2)로 파싱 -->
+        <li><input type="text" th:value="타임리프"></li>
+    </ul>
+</body>
+</html>
