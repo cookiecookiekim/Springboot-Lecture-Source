@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // ② 컨트롤러 클래스
 @Controller
@@ -57,8 +59,27 @@ public class LectureController {
         SearchCriteria criteria = new SearchCriteria(1, 10, 3);
 
         // key, value 형식으로 저장 가능하지만, key 작성하지 않을 시
-        // 변수명이 곧 키 값이 된다.
+        // 인스턴스의 타입 =  클래스명이 곧 키 값이 된다.
         mv.addObject(criteria);
+
+        List<MemberDTO> memberList = new ArrayList<>();
+        memberList.add(new MemberDTO("하츄핑", 4, '여', "서울시 노진구"));
+        memberList.add(new MemberDTO("시진핑", 5, '남', "베이징 사천구"));
+        memberList.add(new MemberDTO("핑핑이", 7, '남', "강원도 춘천시"));
+        memberList.add(new MemberDTO("티니핑", 2, '여', "강원도 원주시"));
+        memberList.add(new MemberDTO("핑구", 3, '여', "경기도 광주시"));
+
+        mv.addObject("memberList" , memberList);
+
+        // Map 형태로 전달해보기
+        Map<String, MemberDTO> memberMap = new HashMap<>();
+        memberMap.put("1", new MemberDTO("하츄핑", 4, '여', "서울시 노진구"));
+        memberMap.put("2", new MemberDTO("시진핑", 5, '남', "베이징 사천구"));
+        memberMap.put("3", new MemberDTO("핑핑이", 7, '남', "강원도 춘천시"));
+        memberMap.put("4", new MemberDTO("티니핑", 2, '여', "강원도 원주시"));
+        memberMap.put("5", new MemberDTO("핑구", 3, '여', "경기도 광주시"));
+
+        mv.addObject("memberMap", memberMap);
 
         mv.setViewName("lecture/etc");
 
