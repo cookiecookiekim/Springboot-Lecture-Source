@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // ② 컨트롤러 클래스
 @Controller
 @RequestMapping("/lecture/*") // lecture 하위 모두 매핑하겠다.
@@ -31,7 +34,33 @@ public class LectureController {
         mv.addObject("num",1);
         mv.addObject("str","바나나");
 
+        // th:each (여러개 담을 List 객체 생성)
+        List<MemberDTO> memberList = new ArrayList<>();
+        // 아래 추가한 list는 DB에서 SELECT 해왔다고 생각하기
+        memberList.add(new MemberDTO("하츄핑", 4, '여', "서울시 노진구"));
+        memberList.add(new MemberDTO("시진핑", 5, '남', "베이징 사천구"));
+        memberList.add(new MemberDTO("핑핑이", 7, '남', "강원도 춘천시"));
+        memberList.add(new MemberDTO("티니핑", 2, '여', "강원도 원주시"));
+        memberList.add(new MemberDTO("핑구", 3, '여', "경기도 광주시"));
+
+        mv.addObject("memberList" , memberList); // 모델 객체에 담아주기
+
         mv.setViewName("lecture/conditional"); // 보여줄 화면 경로 지정
+
+        return mv;
+    }
+
+    @GetMapping("etc")
+    public ModelAndView etc(ModelAndView mv) {
+
+        // 모든 필드를 초기화 하는 생성자로 값 초기화 진행
+        SearchCriteria criteria = new SearchCriteria(1, 10, 3);
+
+        // key, value 형식으로 저장 가능하지만, key 작성하지 않을 시
+        // 변수명이 곧 키 값이 된다.
+        mv.addObject(criteria);
+
+        mv.setViewName("lecture/etc");
 
         return mv;
     }
