@@ -58,7 +58,7 @@
     <!-- 차선 방법 (block : html이 아니라 가상의 공간이므로 부담 없음)
         → 공간 할당이 없으니, 단순히 공유할 값을 사용할 공간이라고 생각-->
     <th:block th:object="${member}">
-        <p th:text="age"></p>
+        <p th:text="*{age}"></p>
     </th:block>
     <hr>
 
@@ -75,5 +75,41 @@
         <li th:utext="${hello}"></li> <!-- 태그 자체로(h2)로 파싱 -->
         <li><input type="text" th:value="타임리프"></li>
     </ul>
+
+    <h3 th:inline="none">표현식 - 인라인 표현식 [[...]], [(...)]</h3>
+    <p th:inline="none">
+        변수 표현식의 값을 html에 직접 사용하기 위해서 th:text와 동일한 기능인
+        [[...]]을 사용할 수 있고 th:utext와 동일한 기능인 [(...)]을 사용할 수 있다.
+        th:inline="none"으로 설정 시, [[]]와 [()]를 단순 문자열로 취급
+    </p>
+    <ul>
+        <li>[[${hello}]]</li> <!-- text와 동일 기능-->
+        <li>[(${hello})]</li> <!-- utext와 동일 기능 -->
+        <!-- inline 모드 종료하기 : none -->
+        <li th:inline="none">[[${hello}]]</li> <!-- [[${hello}]] 그대로 출력 -->
+        <li th:inline="none">[(${hello})]</li> <!-- [(${hello})] 그대로 출력 -->
+    </ul>
+
+    <!-- 자바스크립트 언어로 서버에 전달 가능 -->
+    <script>
+        window.onload = function(){
+              const hi = `[[${hello}]]`;
+              alert(hi);
+        }
+    </script>
+    <h3>리터럴 치환 ||</h3>
+    <p>'+' 기호를 사용하지 않고 문자열 합치는 ||</p>
+    <th:block th:object="${member}">
+         <!-- 추가적인 텍스트를 p 영역 안에 넣게되면 해당 내용은 출력되지 않음
+          ex) <p th:text="*{name}"> 이름 = </p>
+            이유 : block 자체를 인식하기 때문-->
+        <p th:text="|이름 = *{name}|"></p>
+        <p th:text="|나이 = *{age}|"></p>
+        <p th:text="|성별 = *{gender}|"></p>
+        <p th:text="|주소 = *{address}|"></p>
+    </th:block>
+
+
+
 </body>
 </html>

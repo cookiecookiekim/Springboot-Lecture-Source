@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h3>제어문</h3>
+    <h2>th:if , th:unless</h2>
+    <p>
+        th:if는 변수 표현식을 활용해서 조건식으로 결과가 true일 때
+        해당 태그의 내용이 나오게 된다.
+        th:unless는 표현식의 조건식 결과과 false일 때 처리된다.
+    </p>
+
+    <!-- num : 1-->
+    <p th:if="${ num > 0 }">넘어온 값이 0보다 큽니다.</p> <!-- true 이므로 출력-->
+    <p th:if="${ num < 0 }">넘어온 값이 0보다 작습니다.</p>
+    <p th:unless="${ num < 0 }">넘어온 값이 0보다 커요.</p> <!-- false 이므로 출력-->
+
+    <th:block th:if="${str == '사과'}"> <!-- false 이므로 생략 -->
+        <p>사과 좋습니다, 좋고요.</p>
+    </th:block>
+
+    <th:block th:if="${str == '바나나'}"> <!-- true 이므로 출력-->
+        <p>바나나 좋습니다, 좋고요.</p>
+    </th:block>
+
+    <!-- and , or를 사용해서 다중 조건 처리를 할 수 있음. -->
+    <p th:if="${num > 0 or num <= 10}">1부터 10까지의 양수입니다.</p>
+    <p th:if="${str != null and str == '바나나'}">바나나 좋습니다~</p>
+
+    <h3>th:switch , th:case</h3>
+    <th:block th:switch="${str}">
+        <span th:case="사과">사과 선택</span>
+        <span th:case="바나나">바나나 선택</span>
+    </th:block>
+</body>
+</html>

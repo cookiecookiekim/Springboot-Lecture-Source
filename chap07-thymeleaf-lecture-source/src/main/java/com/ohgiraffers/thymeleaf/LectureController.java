@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LectureController {
 
     @GetMapping("expression")
-    public ModelAndView expression (ModelAndView mv){
+    public ModelAndView expression(ModelAndView mv) {
 
         // 한 명의 정보를 DTO 클래스를 이용하여 mv에 Key 와 Value로 값 집어 넣기
         mv.addObject("member", new MemberDTO("김규남", 20, '남', "서울시"));
@@ -25,4 +25,14 @@ public class LectureController {
         return mv;
     }
 
+    @GetMapping("conditional")
+    public ModelAndView conditional(ModelAndView mv) {
+
+        mv.addObject("num",1);
+        mv.addObject("str","바나나");
+
+        mv.setViewName("lecture/conditional"); // 보여줄 화면 경로 지정
+
+        return mv;
+    }
 }
