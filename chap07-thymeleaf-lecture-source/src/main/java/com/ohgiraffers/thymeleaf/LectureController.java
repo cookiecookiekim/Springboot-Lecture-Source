@@ -85,4 +85,17 @@ public class LectureController {
 
         return mv;
     }
+
+    // 24-11-20 (수) 1교시 조각
+    @GetMapping ("fragment")
+    public ModelAndView fragment (ModelAndView mv){
+
+        // 테스트 용으로 데이터 넣기
+        mv.addObject("test1", "value1");
+        mv.addObject("test2", "value2");
+
+        mv.setViewName("lecture/fragment"); // view 페이지 경로 지정
+
+        return mv;
+    }
 }

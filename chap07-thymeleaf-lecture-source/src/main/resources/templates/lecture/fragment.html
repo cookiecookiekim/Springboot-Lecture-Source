@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .header {
+            color: red;
+        }
+        .footer {
+            color: blue;
+        }
+    </style>
+</head>
+<body> <!-- 24-11-20 (수) 1교시 조각(기능) 만들어 놓고 가져다 붙이기 -->
+    <!-- comment.
+            th:replace는 해당 영역에 있는 코드를 대체하는 Fragment를 호출하는 문법
+            기존의 코드를 지우고 불러온 Fragment로 대체한다.
+            fragment 문법 : ~{} -->
+        <!-- 클래스명.메서드명 과 유사하게 ~ 파일 위치 :: fragment 명을 기술해서 부르면 된다. -->
+    <header th:replace="~{/common/header :: headerFragment}">
+        <h1>Header 영역</h1> <!-- Header 영역 이라는 글자가 무시되고, Fragment Header 가 화면에 노출된다. -->
+    </header>
+
+    <!-- comment.
+            fragment에 서버에서 받은 값을 전달하여 공용으로
+                사용할 태그를 동적으로 반환할 수 있음. -->
+    <aside th:replace="~{/common/aside :: asideFragment(${test1}, ${test2})}"></aside>
+              <!-- 아무런 코드도 작성하지 않았지만 value1, value2 노출. -->
+    <main>
+        <aticle>
+            <section>
+                <h1>메인 내용 작성 영역</h1>
+            </section>
+        </aticle>
+    </main>
+    <footer>
+        <h2>Footer 영역</h2>
+    </footer>
+</body>
+</html>
