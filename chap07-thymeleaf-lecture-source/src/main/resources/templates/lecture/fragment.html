@@ -37,7 +37,13 @@
             </section>
         </aticle>
     </main>
-    <footer>
+
+    <!-- comment.
+            th:insert 문법은 해당 영역에 삽입하고자 하는 Fragment를 삽입하는
+            문법으로 블록 내에 정의되어 있는 내용에 불러온 내용을 추가(삽입) 한다.
+            불러오는 블럭을 기준으로 내부의 값을 제거하고 불러온 Fragment로 삽입-->
+    <footer th:insert="~{common/footer :: footerFragment}">
+        <!-- Footer 영역은 무시되고, footer.html에 작성한 내용이 파란색으로 출력 -->
         <h2>Footer 영역</h2>
     </footer>
 </body>
