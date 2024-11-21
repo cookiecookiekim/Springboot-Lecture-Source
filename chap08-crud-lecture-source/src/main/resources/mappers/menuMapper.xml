@@ -31,4 +31,16 @@
             MENU_CODE
     </select>
 
+    <resultMap id="categoryResultMap" type="category"> <!-- CategoryDTO에 별칭 설정 -->
+        <id property="code" column="category_code"/> <!-- 필드와 쿼리 매칭-->
+        <result property="name" column="category_name"/>
+        <result property="refCategoryCode" column="ref_CategoryCode"/>
+    </resultMap>
+    <select id="findAllCategory" resultMap="categoryResultMap">
+        select
+            *
+        from
+            tbl_category
+    </select>
+
 </mapper>

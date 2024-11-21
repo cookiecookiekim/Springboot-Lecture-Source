@@ -1,6 +1,7 @@
 package com.ohgiraffers.crud.menu.model.service;
 
 import com.ohgiraffers.crud.menu.model.dao.MenuMapper;
+import com.ohgiraffers.crud.menu.model.dto.CategoryDTO;
 import com.ohgiraffers.crud.menu.model.dto.MenuDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,9 @@ public class MenuService {
     public List<MenuDTO> findAllMenus() {
 
         return menuMapper.findAllmenus(); // DAO 계층의 menuMapper 한 번 더 호출
+    }
+
+    public List<CategoryDTO> findAllCategory() {
+        return menuMapper.findAllCategory();
     }
 }

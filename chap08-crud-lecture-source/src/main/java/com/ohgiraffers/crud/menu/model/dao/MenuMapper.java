@@ -1,5 +1,6 @@
 package com.ohgiraffers.crud.menu.model.dao;
 
+import com.ohgiraffers.crud.menu.model.dto.CategoryDTO;
 import com.ohgiraffers.crud.menu.model.dto.MenuDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,4 +16,7 @@ public interface MenuMapper {
 
     List<MenuDTO> findAllmenus(); // 쿼리문 매핑 ID
     // → 쿼리문 작성하러 ⑨ resources / mappers / menuMapper.xml
+
+    List<CategoryDTO> findAllCategory();
+
 }
