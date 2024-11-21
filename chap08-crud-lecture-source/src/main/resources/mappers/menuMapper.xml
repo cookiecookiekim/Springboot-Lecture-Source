@@ -43,5 +43,22 @@
         from
             tbl_category
     </select>
+                                                 <!-- 전달 받을 타입 지정-->
+    <insert id="registNewMapper" parameterType="com.ohgiraffers.crud.menu.model.dto.MenuDTO">
+        insert tbl_menu
+        (
+         menu_name
+        ,menu_price
+        ,category_code
+        ,orderable_status
+        )
+        value
+        (
+         #{name}
+        ,#{price}
+        ,#{categoryCode}
+        ,#{orderableStatus}
+        )
+    </insert>
 
 </mapper>
