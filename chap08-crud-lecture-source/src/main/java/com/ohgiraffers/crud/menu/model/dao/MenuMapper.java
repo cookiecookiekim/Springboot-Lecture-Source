@@ -20,4 +20,8 @@ public interface MenuMapper {
     List<CategoryDTO> findAllCategory();
 
     void registNewMapper(MenuDTO newMenu);
+
+    List<MenuDTO> selectMenuCodeList(int selectCode); // 메뉴 코드로 조회하기
+
+    List<MenuDTO> clickMenuSelect(int code);
 }

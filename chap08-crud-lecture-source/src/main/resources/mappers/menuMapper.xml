@@ -61,4 +61,21 @@
         )
     </insert>
 
+    <select id="selectMenuCodeList" resultMap="menuResultMap" parameterType="com.ohgiraffers.crud.menu.model.dto.MenuDTO">
+        SELECT
+            *
+        FROM
+            tbl_menu
+        WHERE
+            menu_code = #{code}
+    </select>
+
+    <select id="clickMenuSelect" resultMap="menuResultMap" parameterType="com.ohgiraffers.crud.menu.model.dto.MenuDTO">
+        SELECT
+             *
+        FROM
+             tbl_menu
+        WHERE
+             menu_code = #{code}
+    </select>
 </mapper>

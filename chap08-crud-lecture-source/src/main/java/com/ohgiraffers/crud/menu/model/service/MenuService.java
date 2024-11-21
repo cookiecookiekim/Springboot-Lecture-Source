@@ -40,4 +40,16 @@ public class MenuService {
     public void regirstMenu(MenuDTO newMenu) {
         menuMapper.registNewMapper(newMenu);
     }
+
+    public List<MenuDTO> selectMenuCode(int selectCode) {
+
+       List<MenuDTO> menuCodeList = menuMapper.selectMenuCodeList(selectCode);
+
+       return menuCodeList;
+    }
+
+    public List<MenuDTO> clickMenuSelect(int code) {
+        List<MenuDTO> result = menuMapper.clickMenuSelect(code);
+        return result;
+    }
 }

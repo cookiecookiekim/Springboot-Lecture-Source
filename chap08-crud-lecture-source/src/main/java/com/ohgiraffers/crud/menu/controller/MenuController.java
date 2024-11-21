@@ -3,11 +3,15 @@ package com.ohgiraffers.crud.menu.controller;
 import com.ohgiraffers.crud.menu.model.dto.CategoryDTO;
 import com.ohgiraffers.crud.menu.model.dto.MenuDTO;
 import com.ohgiraffers.crud.menu.model.service.MenuService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -50,7 +54,6 @@ public class MenuController {
     @GetMapping("regist") // 신규 메뉴 등록 핸들러 메서드
     public String registPage() {
 
-
         return "menu/regist";
     }
 
@@ -85,5 +88,34 @@ public class MenuController {
 ,messageSource.getMessage("regist", new Object[]{newMenu.getName(), newMenu.getPrice()}, locale)); // key값으로 꺼내오기
 
         return "redirect:/menu/list";
+    }
+
+    @GetMapping("codeSelect")
+    public String codeSelect(){
+
+        return "menu/menuCodeList";
+    }
+
+    @PostMapping("codeSelect")
+    public String codeSelect (Model model, @RequestParam int selectCode) {
+
+        System.out.println("selectCode = " + selectCode);
+        List<MenuDTO> menuCode = menuService.selectMenuCode(selectCode);
+
+        System.out.println("menuCode = " + menuCode);
+
+        model.addAttribute("menuCode" , menuCode);
+
+        return "menu/resultMenuCode";
+    }
+
+    @GetMapping("click")
+    public String click (Model model , @RequestParam int code) {
+
+        List<MenuDTO> result = menuService.clickMenuSelect(code);
+
+        model.addAttribute("result" , result);
+
+        return "menu/clickResult";
     }
 }

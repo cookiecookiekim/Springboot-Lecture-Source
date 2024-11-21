@@ -23,8 +23,10 @@
             <th>메뉴가격</th>
             <th>카테고리코드</th>
             <th>판매상태</th>
-        </tr>
-        <tr th:each="menu : ${menuList}" align="center"> <!-- list에 담고 있기 때문에 each(반복문)으로 출력 -->
+        </tr>       <!-- list에 담고 있기 때문에 each(반복문)으로 출력 -->
+
+        <tr th:each="menu : ${menuList}" align="center"
+            th:onclick="|location.href='@{/menu/click(code=${menu.code})}'|">
             <td th:text="${menu.code}"></td>
             <td th:text="${menu.name}"></td>
             <td th:text="${menu.price}"></td>
