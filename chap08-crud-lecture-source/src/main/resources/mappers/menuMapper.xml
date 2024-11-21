@@ -31,10 +31,11 @@
             MENU_CODE
     </select>
 
-    <resultMap id="categoryResultMap" type="category"> <!-- CategoryDTO에 별칭 설정 -->
+    <!-- 비동기 카테고리 조회를 위한 쿼리문 -->
+    <resultMap id="categoryResultMap" type="com.ohgiraffers.crud.menu.model.dto.CategoryDTO"> <!-- CategoryDTO에 별칭 설정 -->
         <id property="code" column="category_code"/> <!-- 필드와 쿼리 매칭-->
         <result property="name" column="category_name"/>
-        <result property="refCategoryCode" column="ref_CategoryCode"/>
+        <result property="refCategoryCode" column="ref_category_code"/>
     </resultMap>
     <select id="findAllCategory" resultMap="categoryResultMap">
         select

@@ -27,9 +27,35 @@
         /* comment. 비동기처리 (신규 등록과 '동시에' 카테고리 코드도 조회해야 한다.)
                     화면이 로딩될 때 미리 데이터를 불러와 화면에 뿌려줌. */
         /* comment. fecth란 강제로 잡아 채다라는 뜻 */
+        /* comment.
+            fetch는 regist.html 페이지가 요청되는 순간 동작을 한다.
+            즉, 물리적인 버튼을 누르거나, 페이지 이동 등의 작업을 하지 않아도
+            요청을 보낸다는 의미.
+            /menu/category 요청이 끝나면 돌아오는 값은 json 형식의 문자열 데이터
+            ex) {code : 3, name : 한식}
+            따라서 자바스크립트 객체로써 사용하기 위해서는 문자열 데이터를
+            객체 형태로 변환해야 한다. */
 
         //  뭔가를 하지 않아도(버튼 클릭) category의 데이터를 알아서 미리 가져옴.
-        fetch("/menu/category")
+        fetch("/menu/category") // 데이터 덩어리라고 생각
+        // then 구문 : json 형식의 문자열 값을 자바스크립트 객체 형식으로 변환
+            .then(res => res.json()) // 첫번째 매개변수인 res 변수에 데이터가 들어가있음.
+            // .then(res => res.json()) → 자바스크립트 사용할 수 있게 변환 완료
+
+            .then(data => { // 변환된 데이터가 data 변수에 담김
+                console.log(data); // 확인용 출력
+                // select 태그 가져옴.
+                const $categoryCode = document.getElementById("categoryCode"); // dom 요소 취득
+
+                // for in 반복문 : 변수에 data에 있는 프로퍼티 키 대입
+                for(let index in data) { // data를 index에 담아줌. (0 ~ n key 값을 index에 삽입)
+                    const $option = document.createElement("option"); // 옵션 태그 생성
+                    $option.value = data[index].code; // value 설정
+                    $option.textContent = data[index].name;
+                    // 마지막으로 select 태그에 자식으로 붙여 놓기
+                    $categoryCode.appendChild($option);
+                }
+            })
     </script>
 </body>
 </html>
