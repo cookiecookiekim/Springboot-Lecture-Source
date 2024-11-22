@@ -78,4 +78,25 @@
         WHERE
              menu_code = #{code}
     </select>
+
+    <!-- 24-11-22 (금) 1교시 메뉴 코드로 카테고리 정보 가져오기 (JOIN) -->
+    <resultMap id="menuAndCategoryResultMap" type="com.ohgiraffers.crud.menu.model.dto.menuAndCategoryDTO">
+        <id property="code" column="menu_code"/> <!-- 필드와 쿼리 매칭-->
+        <result property="name" column="menu_name"/>
+        <result property="price" column="menu_price"/>
+        <result property="orderableStatus" column="orderable_status"/>
+        <result property="categoryDTO" />
+    </resultMap>
+
+    <select id="findAllMenuAndCategory" resultMap="menuAndCategoryResultMap">
+        SELECT
+             a.*
+            ,b.*
+        FROM
+            tbl_menu a
+        join
+            tbl_category b on (a.category_code = b.category_code)
+        where
+            a.orderable_status = 'Y'
+    </select>
 </mapper>

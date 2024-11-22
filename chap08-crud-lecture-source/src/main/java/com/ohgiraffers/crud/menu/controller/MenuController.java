@@ -1,17 +1,16 @@
 package com.ohgiraffers.crud.menu.controller;
 
 import com.ohgiraffers.crud.menu.model.dto.CategoryDTO;
+import com.ohgiraffers.crud.menu.model.dto.MenuAndCategoryDTO;
 import com.ohgiraffers.crud.menu.model.dto.MenuDTO;
 import com.ohgiraffers.crud.menu.model.service.MenuService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -21,6 +20,15 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/menu/*")
 public class MenuController {
+
+    /* comment. 24-11-22 (금) Logging
+    *   어플리케이션이 실행 중 발생하는 이벤트 (정보, 경고, 오류) 등 기록하는 과정
+    *   이는 사용자 화면을 위해 만드는 기능이 아닌, 개발자가 어플리케이션의
+    *   상태를 추적하고, 모니터링 하는 데 사용할 수 있다. */
+    // 아파치 제공 로거 사용 , 인터페이스이므로 LogManager를 이용해 객체 생성
+    private static final Logger logger = LogManager.getLogger(MenuController.class);
+                                                 // 어떤 클래스에 대해 로그 처리 할 건지?
+
 
     // ⑧ MenuService의 메서드를 사용하기 위해 관계를 형성해야 함.
     private final MenuService menuService; // 생성자 주입으로 형성
@@ -83,6 +91,16 @@ public class MenuController {
         // message_ko_KR.properties : ko_KR은 한국어 기본 설정
         menuService.regirstMenu(newMenu);
 
+        /* comment.
+        *   TRACE : 상세한 디버깅 정보 (매우 세밀한 로그)
+        *   DEBUG : 개발 중 디버깅용 정보
+        *   INFO : 일반적인 실행 정보
+        *   WARN : 잠재적인 문제 경고
+        *   ERROR : 실행중 발생한 오류 */
+        // 추후에 sout 말고 logger 처리로 정보를 확인해야 함. (안에 뭐 들어있는지 확인)
+        logger.info("Locale : {}" , locale);
+        logger.info("newMenu : {}" , newMenu);
+
         // 사용자에게 등록 잘 됐다는 viwe 설정
         rttr.addFlashAttribute("successMessage"
 ,messageSource.getMessage("regist", new Object[]{newMenu.getName(), newMenu.getPrice()}, locale)); // key값으로 꺼내오기
@@ -117,5 +135,17 @@ public class MenuController {
         model.addAttribute("result" , result);
 
         return "menu/clickResult";
+    }
+
+    // 24-11-22 (금) Join 조회
+    @GetMapping("join/list")
+    public String menuAndCategoryList (Model model){
+        // 값 담기 위한 Model 객체 전달 (MenuAndCategoryDTO 구성)
+
+        // 메뉴 정보 뿐 아니라 카테고리 정보도 받아 와야 함 List<MenuAndCategoryDTO>
+        List<MenuAndCategoryDTO> joinList = menuService.findAllMenuAndCategory();
+
+        model.addAttribute("joinList", joinList);
+        return "menu/join";
     }
 }

@@ -1,6 +1,7 @@
 package com.ohgiraffers.crud.menu.model.dao;
 
 import com.ohgiraffers.crud.menu.model.dto.CategoryDTO;
+import com.ohgiraffers.crud.menu.model.dto.MenuAndCategoryDTO;
 import com.ohgiraffers.crud.menu.model.dto.MenuDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -24,4 +25,6 @@ public interface MenuMapper {
     List<MenuDTO> selectMenuCodeList(int selectCode); // 메뉴 코드로 조회하기
 
     List<MenuDTO> clickMenuSelect(int code);
+
+    List<MenuAndCategoryDTO> findAllMenuAndCategory();
 }
