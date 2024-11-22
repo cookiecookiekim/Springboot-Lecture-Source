@@ -27,4 +27,6 @@ public interface MenuMapper {
     List<MenuDTO> clickMenuSelect(int code);
 
     List<MenuAndCategoryDTO> findAllMenuAndCategory();
+
+    int deleteMenuCode(int menuCode);
 }

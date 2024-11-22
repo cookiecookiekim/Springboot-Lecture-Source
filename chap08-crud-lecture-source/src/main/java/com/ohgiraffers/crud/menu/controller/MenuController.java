@@ -148,4 +148,35 @@ public class MenuController {
         model.addAttribute("joinList", joinList);
         return "menu/join";
     }
+
+    /* comment. DELETE 구문 생성 (미션)
+    *       인덱스 페이지에서 DELETE 버튼 누르면
+    *       메뉴 코드를 입력할 수 있는 input 태그와
+    *       전송 버튼을 보여주는 view 페이지로 이동.
+    *       -
+    *       이후 값 전달 받아, 삭제하는 기능 생성
+    *       전송버튼 누르면 menu/list 페이지로 redirect 진행
+    *       리다이렉트 시 사용자에게 alert 창으로 '~ 번 메뉴 삭제 완료되었습니다' 출력 */
+
+    @GetMapping ("delete")
+    public String menuDelete(){
+        return "menu/delete";
+    }
+
+    @PostMapping ("delete")
+    public String menuDelete(@RequestParam("deleteName") int menuCode, RedirectAttributes rttr, Locale locale){
+
+        menuService.deleteMenuCode(menuCode);
+
+        rttr.addFlashAttribute("deleteMessage"
+                ,messageSource.getMessage("delete",new Object[]{menuCode}, locale));
+
+        return "redirect:/menu/list";
+    }
+
+    @PostMapping("modify")
+    public String menuModify () {
+
+        return "menu/modify";
+    }
 }

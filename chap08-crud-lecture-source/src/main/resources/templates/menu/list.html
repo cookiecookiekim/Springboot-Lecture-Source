@@ -34,5 +34,14 @@
             <td th:text="${menu.orderableStatus}"></td>
         </tr>
     </table>
+
+<p th:text="${deleteMessage}">메시지가 없습니다.</p>
+    <script>
+        const message1 = `[[${deleteMessage}]]`;
+        console.log(message1);
+        if (message1) {
+            alert(message1)
+        }
+    </script>
 </body>
 </html>

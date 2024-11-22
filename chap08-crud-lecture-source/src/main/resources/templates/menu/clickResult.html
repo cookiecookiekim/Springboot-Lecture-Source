@@ -17,12 +17,16 @@
             <th>판매상태</th>
         </tr>
         <tr th:each="diplay : ${result}" align="center">
-            <td th:text="${diplay.code}"></td>
-            <td th:text="${diplay.name}"></td>
-            <td th:text="${diplay.price}"></td>
-            <td th:text="${diplay.categoryCode}"></td>
-            <td th:text="${diplay.orderableStatus}"></td>
+            <td th:text="${diplay.code}"><input type="text" name="code"></td>
+            <td th:text="${diplay.name}"><input type="text" name="name"></td>
+            <td th:text="${diplay.price}"><input type="text" name="price"></td>
+            <td th:text="${diplay.categoryCode}"><input type="text" name="categoryCode"></td>
+            <td th:text="${diplay.orderableStatus}"><input type="text" name="orderableStatus"></td>
         </tr>
     </table>
+    <form action="menu/modify" method="post">
+    <input type="submit" value="수정하기" name="modify">
+    <input type="submit" value="전송하기">
+    </form>
 </body>
 </html>

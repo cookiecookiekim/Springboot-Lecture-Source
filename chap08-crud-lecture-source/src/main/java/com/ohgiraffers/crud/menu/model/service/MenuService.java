@@ -55,7 +55,10 @@ public class MenuService {
     }
 
     public List<MenuAndCategoryDTO> findAllMenuAndCategory() {
-
         return menuMapper.findAllMenuAndCategory();
+    }
+
+    public int deleteMenuCode(int menuCode) {
+        return menuMapper.deleteMenuCode(menuCode);
     }
 }

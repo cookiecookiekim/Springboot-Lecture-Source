@@ -80,17 +80,25 @@
     </select>
 
     <!-- 24-11-22 (금) 1교시 메뉴 코드로 카테고리 정보 가져오기 (JOIN) -->
-    <resultMap id="menuAndCategoryResultMap" type="com.ohgiraffers.crud.menu.model.dto.menuAndCategoryDTO">
-        <id property="code" column="menu_code"/> <!-- 필드와 쿼리 매칭-->
+    <resultMap id="joinResultMap" type="com.ohgiraffers.crud.menu.model.dto.MenuAndCategoryDTO">
+        <id property="code" column="menu_code"/>
         <result property="name" column="menu_name"/>
         <result property="price" column="menu_price"/>
         <result property="orderableStatus" column="orderable_status"/>
-        <result property="categoryDTO" />
+        <!-- CategoryDTO는 어떻게 연결? → 1:1 관계에선 association으로 연결-->
+        <association property="categoryDTO" javaType="com.ohgiraffers.crud.menu.model.dto.CategoryDTO">
+            <id property="code" column="category_code"/>
+            <result property="name" column="category_name"/>
+            <result property="refCategoryCode" column="ref_category_code"/>
+        </association>
     </resultMap>
 
-    <select id="findAllMenuAndCategory" resultMap="menuAndCategoryResultMap">
+    <select id="findAllMenuAndCategory" resultMap="joinResultMap">
         SELECT
-             a.*
+             a.menu_code
+            ,a.menu_name
+            ,a.menu_price
+            ,a.orderable_status
             ,b.*
         FROM
             tbl_menu a
@@ -99,4 +107,9 @@
         where
             a.orderable_status = 'Y'
     </select>
+
+    <delete id="deleteMenuCode" parameterType="int">
+        DELETE FROM tbl_menu
+        WHERE menu_code = #{code}
+    </delete>
 </mapper>
